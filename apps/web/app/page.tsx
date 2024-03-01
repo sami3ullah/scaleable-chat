@@ -7,24 +7,32 @@ import { useSocket } from "../context/SocketProvider";
 type Props = {};
 
 const HomePage = (props: Props) => {
-  const { sendMessage } = useSocket();
+  const { sendMessage, messages } = useSocket();
   const [message, setMessage] = useState("");
   return (
     <div>
       <div>
-        <h3>All Messages will appear here</h3>
         <div>
           <input
             onChange={(e) => setMessage(e.target.value)}
+            value={message}
             className={classes["chat-input"]}
             placeholder="Message..."
           />
           <button
-            onClick={(e) => sendMessage(message)}
+            onClick={(e) => {
+              sendMessage(message);
+              setMessage("");
+            }}
             className={classes["button"]}
           >
             Send
           </button>
+        </div>
+        <div>
+          {messages.map((e) => (
+            <li>{e}</li>
+          ))}
         </div>
       </div>
     </div>
